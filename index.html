@@ -33,6 +33,7 @@
         const fs = require('fs');
         const data = fs.readFileSync('data.json');
         const jsonData = JSON.parse(data);
+        document.getElementById("counter").textContent = jsonData.count;
         if(Math.floor(Math.random() * 10) > 7)
         jsonData.count ++;
         const jsonString = JSON.stringify(jsonData);
@@ -85,7 +86,7 @@
                تمتع بأمان و خصوصية أكثر من النسخة الرسمية
             </p>
 
-            <span id="counter" style= "color:#FFF;">3</span>
+            
 
             <!-- Button -->
             <p class="btn-app-store">
@@ -93,6 +94,7 @@
                 <img src="images/btn-app-store.png" alt="">
               </a>
             </p> <!-- /.btn-app-store -->
+            <span style= "color:#FFF;">عدد التحميلات :</span><span id="counter" style= "color:#FFF;">عدد التحميلات :</span>
 
           </div> <!-- /.col-md-7 -->
 
