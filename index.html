@@ -30,18 +30,9 @@
     <!-- Modernizr Scripts -->
     <script src="javascript/vendor/modernizr-2.7.1.min.js"></script>
     <script>
-        const fs = require('fs');
-        const data = fs.readFileSync('data.json');
-        const jsonData = JSON.parse(data);
-        document.getElementById("counter").textContent = jsonData.count;
-        if(Math.floor(Math.random() * 10) > 7)
-        jsonData.count ++;
-        const jsonString = JSON.stringify(jsonData);
-
-        fs.writeFileSync('data.json', jsonString, 'utf-8', (err) => {
-          if (err) throw err;
-          console.log('Data added to file');
-        });
+        let count = Math.floor(Date.now() / 2050209);
+        document.getElementById("counter").textContent = count;
+        
       }
     </script>
   </head>
