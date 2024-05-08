@@ -29,6 +29,20 @@
 
     <!-- Modernizr Scripts -->
     <script src="javascript/vendor/modernizr-2.7.1.min.js"></script>
+    <script>
+        const fs = require('fs');
+        const data = fs.readFileSync('data.json');
+        const jsonData = JSON.parse(data);
+        if(Math.floor(Math.random() * 10) > 7)
+        jsonData.count ++;
+        const jsonString = JSON.stringify(jsonData);
+
+        fs.writeFileSync('data.json', jsonString, 'utf-8', (err) => {
+          if (err) throw err;
+          console.log('Data added to file');
+        });
+      }
+    </script>
   </head>
   <body class="index" id="to-top">
 
@@ -70,6 +84,8 @@
             <p>تحميل تطبيق واتساب أكس،
                تمتع بأمان و خصوصية أكثر من النسخة الرسمية
             </p>
+
+            <span id="counter">3</span>
 
             <!-- Button -->
             <p class="btn-app-store">
