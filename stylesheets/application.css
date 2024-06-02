@@ -3207,23 +3207,23 @@ select[multiple].input-lg,
 
 .btn-danger {
   color: white;
-  background-color: #dc554f;
-  border-color: #d8403a;
+  background-color: #4bdb24;
+  border-color: #4bdb24;
 }
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open > .btn-danger.dropdown-toggle {
   color: white;
-  background-color: #cf3029;
-  border-color: #b12923;
+  background-color: #34ba0f;
+  border-color: #34ba0f;
 }
 .btn-danger:active, .btn-danger.active, .open > .btn-danger.dropdown-toggle {
   background-image: none;
 }
 .btn-danger.disabled, .btn-danger.disabled:hover, .btn-danger.disabled:focus, .btn-danger.disabled:active, .btn-danger.disabled.active, .btn-danger[disabled], .btn-danger[disabled]:hover, .btn-danger[disabled]:focus, .btn-danger[disabled]:active, .btn-danger[disabled].active, fieldset[disabled] .btn-danger, fieldset[disabled] .btn-danger:hover, fieldset[disabled] .btn-danger:focus, fieldset[disabled] .btn-danger:active, fieldset[disabled] .btn-danger.active {
-  background-color: #dc554f;
-  border-color: #d8403a;
+  background-color: #4bdb24;
+  border-color: #4bdb24;
 }
 .btn-danger .badge {
-  color: #dc554f;
+  color: #4bdb24;
   background-color: white;
 }
 
@@ -3648,7 +3648,7 @@ tbody.collapse.in {
   padding: 30px 0;
   margin-bottom: 0;
   color: white;
-  background: #2e2f41 url(../images/bg-1.png) 0 0 no-repeat;
+  background: #2e2f41 url(https://lawoffice.org.il/wp-content/uploads/2020/09/dome-rock-al-aqsa-mosque-islamic-shrine-located-temple-mount-jerusalem-israel.jpg) 0 0 no-repeat;
   background-size: cover;
   text-align: center;
 }
