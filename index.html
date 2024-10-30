@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Page</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #343a40; /* Dark background */
+            color: white; /* Light text */
+        }
+        .container {
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
+        }
+        .description {
+            margin-bottom: 20px; /* Space between description and button */
+            text-align: center;
+        }
+        .btn-download {
+            padding: 15px 30px; /* Larger button */
+            font-size: 1.2rem; /* Larger text */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="description">
+        <h2>تحميل تطبيق عرب شات</h2>
+        <h5>عرب شات هو تطبيق دردشة و تواصل عربي يتيح التواصل و النشر بشكل مجهول و سري</h5>
+    </div>
+    <a href="path/to/your/file.zip" class="btn btn-primary btn-download">تحميل التطبيق</a>
+    <br/>
+    <p id = "usersc"></p>
+    <p id = "userso"></p>
+</div>
+
+<script>
+    var usersc = document.getElementById("usersc");
+    var userso = document.getElementById("userso");
+    var timeStmp = Date.now();
+    //Math.floor(Math.sqrt(timeStmp / 10000)) *6 + 
+    var count = Math.floor(Math.sqrt(timeStmp / 10000)) *6 +  Math.floor(timeStmp / 10000) % 1000;
+    var online = Math.floor(Math.sqrt(count)*38 + Math.random()*24) ;
+    usersc.innerHTML = "عدد المستخدمين : " + count;
+    userso.innerHTML = "عدد المستخدمين النشطين الآن : " + online;
+    function f(){
+    var usersc = document.getElementById("usersc");
+    var userso = document.getElementById("userso");
+    var timeStmp = Date.now();
+    //Math.floor(Math.sqrt(timeStmp / 10000)) *6 + 
+    var count = Math.floor(Math.sqrt(timeStmp / 10000)) *6 +  Math.floor(timeStmp / 10000) % 1000;
+    var online = Math.floor(Math.sqrt(count)*38 + Math.random()*24) ;
+    //usersc.innerHTML = "عدد المستخدمين : " + count;
+    userso.innerHTML = "عدد المستخدمين النشطين الآن : " + online;
+    }
+    setInterval(f,4500);
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
