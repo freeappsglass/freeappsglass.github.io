@@ -1,76 +1,90 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>JSON Generator</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #343a40; /* Dark background */
-            color: white; /* Light text */
+            background-color: #343a40;
+            color: white;
+            text-align: right;
         }
-        .container {
-            height: 100vh; /* Full viewport height */
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center vertically */
-            align-items: center; /* Center horizontally */
+        .card {
+            background-color: #495057;
+            border: none;
         }
-        .description {
-            margin-bottom: 20px; /* Space between description and button */
-            text-align: center;
-        }
-        .btn-download {
-            padding: 15px 30px; /* Larger button */
-            font-size: 1.2rem; /* Larger text */
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #28a745;
+            border-radius: 5px;
+            background-color: #6c757d;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="description">
-        <h2>URL Generator</h2>
+<div class="container mt-5">
+    <div class="card p-4">
+        <h5 class="card-title">إنشاء JSON</h5>
+        <div class="form-group">
+            <label for="title">العنوان</label>
+            <input type="text" class="form-control" id="title" placeholder="أدخل العنوان">
+        </div>
+        <div class="form-group">
+            <label for="text">النص</label>
+            <textarea class="form-control" id="text" rows="3" placeholder="أدخل النص"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="image">رابط الصورة</label>
+            <input type="text" class="form-control" id="image" placeholder="أدخل رابط الصورة">
+        </div>
+        <button class="btn btn-primary" id="generateJsonBtn">إنشاء JSON</button>
     </div>
-    
-    
-    <textarea placeholder="text" id = "input" class="form-control" rows="5"></textarea>
 
-    <input placeholder="facebook" id = "face" class="form-control"/>
-
-    <button type="submit" class="btn btn-primary" onclick="generate()">
-        Generate
-    </button>
-    output :
-    <a id="pp"></a>
-
+    <div class="result" id="jsonResult" style="display: none;">
+        <h6>الناتج:</h6>
+        <a id="jsonOutput"></a>
+        <button class="btn btn-success" id="copyJsonBtn">نسخ إلى الحافظة</button>
+    </div>
 </div>
+
 <script>
+    const utf8Encode = new TextEncoder();
+    document.getElementById('generateJsonBtn').addEventListener('click', function() {
+        
+        const title = document.getElementById('title').value;
+        const text = document.getElementById('text').value;
+        const image = document.getElementById('image').value;
+
+        const jsonObject = {
+            title: title,
+            image: image || null, // Allow null for image if not provided
+            text: text
+        };
+
+        var jsonText = JSON.stringify(jsonObject, null, 2);
+        var finalData = "https://freeappsglass.github.io/post.html?data=" + btoa(utf8Encode.encode(jsonText));
+        
+        
+        document.getElementById('jsonOutput').innerHTML = finalData;
+        document.getElementById('jsonOutput').setAttribute('href',finalData);
+        document.getElementById('jsonResult').style.display = 'block';
+    });
 
     
-    function generate(){
-        let utf8Encode = new TextEncoder();
-        var value  = document.getElementById("input").value;
-        var faceUrl = document.getElementById("face").value;
-        value +="<br\>"+"حساب الفيس : " + '<a href = "' + faceUrl + '">' + faceUrl + "</a>";
-        const finalValue = "https://freeappsglass.github.io/post.html?data=" + btoa(utf8Encode.encode(value));
-        document.getElementById("pp").innerHTML = finalValue;
-        document.getElementById("pp").setAttribute('href',finalValue);
 
-        navigator.clipboard.writeText(finalValue) // Copy text to clipboard
-            .then(() => {
-                document.getElementById('message').textContent = 'تم نسخ النص إلى الحافظة!'; // Success message
-            })
-            .catch(err => {
-                document.getElementById('message').textContent = 'حدث خطأ أثناء النسخ: ' + err; // Error message
-            });
-    }
-
-
+    document.getElementById('copyJsonBtn').addEventListener('click', function() {
+        const jsonText = document.getElementById('jsonOutput').innerText;
+        navigator.clipboard.writeText(jsonText).then(() => {
+            alert('تم نسخ JSON إلى الحافظة!');
+        }).catch(err => {
+            alert('حدث خطأ أثناء النسخ: ', err);
+        });
+    });
 </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

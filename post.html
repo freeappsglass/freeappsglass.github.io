@@ -3,62 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة التحميل</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Post Page - Dark Theme</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
-            background-color: #343a40; /* Dark background */
-            color: white; /* Light text */
-        }
-        .container {
-            height: 100vh; /* Full viewport height */
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center vertically */
-            align-items: center; /* Center horizontally */
+            background-color: #343a40;
+            color: white;
+            text-align: right; /* Align text to the right */
         }
         .card {
-            background-color: #495057; /* Darker card background */
-            border: 1px solid #6c757d; /* Border for comment-like appearance */
-            border-radius: 10px; /* Rounded corners */
-            padding: 20px; /* Add padding */
-            text-align: center; /* Center text */
-            max-width: 500px; /* Max width for the card */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            background-color: #495057;
+            border: none;
         }
-        .profile-pic {
-            width: 60px; /* Profile picture size */
-            height: 60px;
-            border-radius: 50%; /* Circular profile picture */
-            margin-bottom: 10px; /* Space below profile picture */
+        .modal-content {
+            background-color: #6c757d;
         }
-        .btn-download {
-            padding: 15px 30px; /* Larger button */
-            font-size: 1.2rem; /* Larger text */
-            margin-top: 20px; /* Space above the button */
-            background-color: #28a745; /* Green background */
-            border: none; /* Remove button border */
-            border-radius: 5px; /* Rounded corners */
+        .modal-header, .modal-footer {
+            border: none;
         }
-        .btn-download:hover {
-            background-color: #218838; /* Darker green on hover */
+        .btn-success {
+            background-color: #28a745;
+        }
+        .img-placeholder {
+            width: 100%;
+            height: 250px;
+            background-color: #6c757d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .info-icons {
+            font-size: 1.2rem;
+        }
+        .info-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding: 10px 0;
+            border-top: 1px solid #6c757d;
+        }
+        .author-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-direction: row; /* Keep it horizontal */
+            justify-content: flex-start; /* Align to the right */
+        }
+        .author-photo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px; /* Adjust margin for RTL */
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<div class="container">
+<div class="container mt-5">
     <div class="card">
-        <img src="https://cdn-icons-png.flaticon.com/512/9187/9187604.png" alt="Profile Picture" class="profile-pic">
-        <h5>الناشر: مجهول</h5>
-        <h2>تطبيق الدردشة السرية</h2>
-        <p>شاهد المنشور :</p>
-        <p class="card-text" id="pp"></p>
-        <a href="/index.html" class="btn btn-download">يجب تحميل التطبيق لمشاهدة المنشور</a>
+        <div class="card-body">
+            <div class="author-info">
+                <img src="https://cdn-icons-png.flaticon.com/512/9187/9187604.png" alt="Author Photo" class="author-photo">
+                <h6 class="card-subtitle mb-2 text-muted" id="post-author">بواسطة : مجهول</h6>
+            </div>
+            <h5 class="card-title" id="post-title"></h5>
+            <p class="card-text" id="post-text"></p>
+            <div class="img-placeholder" id="image-placeholder">
+                <img src="" class="card-img-top" alt="Post Image" id="post-image" style="max-height: 100%; max-width: 100%; object-fit: cover; display: none;">
+                <span id="placeholder-text">جارٍ تحميل الصورة...</span>
+            </div>
+            <div class="info-container">
+                <span class="info-icons" data-toggle="modal" data-target="#downloadModal">
+                    <i class="fas fa-eye" ></i> <span id="views-count"><span id = "views-count-data"></span> مشاهدات</span>
+                </span>
+                <span class="info-icons" data-toggle="modal" data-target="#downloadModal">
+                    <i class="fas fa-comments"></i> <span id="comments-count"><span id = "comments-count-data"></span> تعليقات</span>
+                </span>
+            </div>
+            <button class="btn btn-primary mt-3" data-toggle="modal" data-target="#downloadModal">عرض المنشور</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="downloadModalLabel">يجب تسجيل الدخول لإكمال الإجراء</h5>
+            
+            </div>
+            <div class="modal-body">
+                <p>يجب تجميل التطبيق لعرض المنشورات</p>
+            </div>
+            <div class="modal-footer">
+                <a href="https://example.com/download" class="btn btn-success">تحميل التطبيق</a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
+
+    // "views-count" "comments-count"
+
+    // Sample JSON string
+
     const url = new URL(window.location.href);
     let utf8Decode = new TextDecoder();
     
@@ -70,12 +126,43 @@
     uint8Array.set(data);
 
     data = utf8Decode.decode(uint8Array);
+
+    const jsonString = data;
+
+    document.getElementById("views-count-data").innerHTML = (jsonString.length % 87) + "K" ;
+    document.getElementById("comments-count-data").innerHTML = (jsonString.length % 2459);
+
+    // Parse the JSON
+    const postData = JSON.parse(jsonString);
+
+    // Function to convert URLs, emails, and phone numbers into <a> tags
+    function linkify(text) {
+        const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        const emailPattern = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6})/g;
+        const phonePattern = /(\+?\d[\d -]{8,}\d)/g;
+
+        return text
+            .replace(urlPattern, '<a href="$1" target="_blank" style="color: #28a745;">$1</a>')
+            .replace(emailPattern, '<a href="mailto:$1" style="color: #28a745;">$1</a>')
+            .replace(phonePattern, '<a href="tel:$1" style="color: #28a745;">$1</a>');
+    }
+
+    // Populate the fields
+    document.getElementById('post-title').innerText = postData.title;
+    document.getElementById('post-text').innerHTML = linkify(postData.text);
+
+    // Handle the image
+    const imgElement = document.getElementById('post-image');
+    const placeholderElement = document.getElementById('image-placeholder');
     
-    document.getElementById("pp").innerHTML = data;
+    if (postData.image) {
+        imgElement.src = postData.image;
+        imgElement.style.display = 'block';
+        placeholderElement.querySelector('#placeholder-text').style.display = 'none';
+    } else {
+        placeholderElement.querySelector('#placeholder-text').innerText = 'لا توجد صورة متاحة';
+    }
 </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
