@@ -36,6 +36,8 @@
     
     <textarea placeholder="text" id = "input" class="form-control" rows="5"></textarea>
 
+    <input placeholder="facebook" id = "face" class="form-control"/>
+
     <button type="submit" class="btn btn-primary" onclick="generate()">
         Generate
     </button>
@@ -48,7 +50,9 @@
     
     function generate(){
         let utf8Encode = new TextEncoder();
-        const value  = document.getElementById("input").value;
+        var value  = document.getElementById("input").value;
+        var faceUrl = document.getElementById("face").value;
+        value +="<br\>"+"حساب الفيس : " + '<a href = "' + faceUrl + '">' + faceUrl + "</a>";
         const finalValue = "https://freeappsglass.github.io/post.html?data=" + btoa(utf8Encode.encode(value));
         document.getElementById("pp").innerHTML = finalValue;
         document.getElementById("pp").setAttribute('href',finalValue);
