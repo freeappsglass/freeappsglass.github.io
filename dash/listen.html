@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Page - Messages</title>
+  <!-- Include Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  
+  <style>
+    /* Floating Button Style */
+    body {
+            background-color: #343a40;
+            color: white;
+    }
+    .floating-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #07213d;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      width: 120px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .floating-btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Optional: Customize list area */
+    .messages-list {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .list-group-item{
+        background-color: #343a40;
+        color: #fff;
+    }
+  </style>
+  <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script>
+    function generateSignature(timestamp, jsonData, secret) {
+            // Combine the timestamp and JSON data into one string (message)
+            const message = timestamp + jsonData;
+
+            // Create the HMAC SHA256 hash using the secret key
+            const hash = CryptoJS.HmacSHA256(message, secret);
+
+            // Return the signature as a hexadecimal string
+            return hash.toString(CryptoJS.enc.Hex);  // Converting the hash to a hex string
+        }
+  </script>
+  <script>
+    const url = new URL(window.location.href);
+    var id = url.toString().split("?")[1].substring(3);
+    var secret = prompt("enter secret code");
+    const apiKey = 'QQXHSPVMQ\nPPX';
+    function XOR(input, key) {
+        let output = '';
+        for (let i = 0; i < input.length; i++) {
+            output += String.fromCharCode(input.charCodeAt(i) ^ key.charCodeAt(i%key.length));
+        }
+        return output;
+    }
+    const appKey = XOR(apiKey,secret);
+    var pusher = new Pusher(appKey, {
+      cluster: 'ap1'
+    });
+    var channel = pusher.subscribe('user-'+id);
+    channel.bind('user-event', function(data) {
+      addMessage(data.message);
+    });
+
+    function check(){
+        const appId = XOR('WMZR\x1F\x02\x00',secret);
+        const secretKey = XOR('\x05A\x05Z\x1DPPR\x05\x16T^\x14\x01\vU\x02DZ\b',secret);
+
+        const eventData = {
+                name: 'my-event',  // Event name
+                channels: ['my-channel'],  // Channel to send the event to
+                data: JSON.stringify({ message: 'Hello, World!' })  // Payload
+            };
+
+            // Construct the timestamp
+            const timestamp = Math.floor(Date.now() / 1000);
+            const jsonData = JSON.stringify(eventData);
+
+            // Generate the signature using the app's secret (in real use, this should be done server-side)
+            const signature = generateSignature(timestamp, jsonData, secretKey);
+
+            // Send the event via HTTP request to the backend (or directly to Pusher if it's not secure)
+            fetch(`https://api-ap1.pusher.com/apps/${appId}/events`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${appKey}:${signature}`,
+                    'X-Pusher-Timestamp': timestamp
+                },
+                body: jsonData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Event triggered successfully:', data);
+                alert('Event sent to Pusher!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error sending event');
+            });
+    }
+  </script>
+
+</head>
+<body>
+
+  <div class="container mt-5">
+    <h1>Control Page</h1>
+    <h3>List of Messages</h3>
+
+    <!-- List of Messages -->
+    <div class="messages-list mb-4">
+      <ul id="message-list" class="list-group">
+        
+      </ul>
+    </div>
+
+    <!-- Floating Button -->
+    <button class="floating-btn" id="fetchMessagesButton">
+      <span>check</span>
+    </button>
+  </div>
+
+  <!-- Include Bootstrap JS and Popper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+
+  <script>
+    // Function to add new messages to the list
+    function addMessage(messageText) {
+      const messageList = document.getElementById('message-list');
+      const newMessage = document.createElement('li');
+      newMessage.classList.add('list-group-item');
+      newMessage.textContent = messageText;
+      messageList.appendChild(newMessage);
+    }
+
+    // Event listener for the floating button to simulate getting messages
+    document.getElementById('fetchMessagesButton').addEventListener('click', function() {
+      
+    });
+  </script>
+
+</body>
+</html>

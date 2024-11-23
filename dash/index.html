@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<head>
+  <title>Pusher Test</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+        }
+        .card {
+            background-color: #495057;
+            text-align: start;
+            margin: 2.5%;
+            padding: 2.5%;
+        }
+    </style>
+  <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+  <script>
+    const apiKey = 'QQXHSPVMQ\nPPX';
+    function XOR(input, key) {
+        let output = '';
+        for (let i = 0; i < input.length; i++) {
+            output += String.fromCharCode(input.charCodeAt(i) ^ key.charCodeAt(i%key.length));
+        }
+        return output;
+    }
+    
+    
+    var secret = prompt("enter secret code");
+
+
+    var pusher = new Pusher(XOR(apiKey,secret), {
+      cluster: 'ap1'
+    });
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      addCard(data);
+    });
+  </script>
+  
+</head>
+<body>
+  
+  <h1>Connected</h1>
+  <div id="clients" class="clients">
+
+  </div>
+  
+
+  <script>
+    var cards = [];
+    function addCard(data){
+        console.log(JSON.stringify(data));
+        cards.push(data);
+        const clientsDiv = document.getElementById("clients");
+        clientsDiv.innerHTML = "";
+        cards.forEach(function (e){
+            clientsDiv.innerHTML += buildCard(e);
+        });
+    }
+    function buildCard(data){
+        return '<p class = "card">'
+             + data.name +
+            '<br/>'+ data.phone +
+            '<a href="listen.html?id=' + data.id + '" target="_blank"> open </a>'
+             +'</p>';
+    }
+  </script>
+</body>
